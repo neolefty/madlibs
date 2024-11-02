@@ -5,7 +5,9 @@ import { Fragment } from "react"
 import Markdown from "react-markdown"
 
 export default function Home() {
-    const { messages, input, handleInputChange, handleSubmit } = useChat()
+    const { messages, input, handleInputChange, handleSubmit } = useChat({
+        maxSteps: 5,
+    })
 
     return (
         <div
@@ -22,7 +24,16 @@ export default function Home() {
                     {messages.map(m => (
                         <Fragment key={m.id}>
                             <strong>{m.role === 'user' ? 'You: ' : 'AI: '}</strong>
-                            <div><Markdown>{m.content}</Markdown></div>
+                            <div className="flex">
+                                {m.content && (
+                                    <div className="flex flex-col gap-2">
+                                        <Markdown>{m.content}</Markdown>
+                                    </div>
+                                )}
+                                {m.toolInvocations && (
+                                    <pre>{JSON.stringify(m.toolInvocations, null, 2)}</pre>
+                                )}
+                            </div>
                         </Fragment>
                     ))}
                 </div>
