@@ -1,6 +1,8 @@
 'use client'
 
 import { useChat } from "ai/react"
+import { Fragment } from "react"
+import Markdown from "react-markdown"
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit } = useChat()
@@ -12,12 +14,16 @@ export default function Home() {
                 <h1 className="text-4xl font-bold text-center sm:text-left">
                     Tell your story
                 </h1>
-                <div>
+                <div style={{
+                    display: "grid",
+                    gridGap: "1rem",
+                    gridTemplateColumns: "min-content 1fr",
+                }}>
                     {messages.map(m => (
-                        <p key={m.id}>
-                            {m.role === 'user' ? 'You: ' : 'AI: '}
-                            {m.content}
-                        </p>
+                        <Fragment key={m.id}>
+                            <strong>{m.role === 'user' ? 'You: ' : 'AI: '}</strong>
+                            <div><Markdown>{m.content}</Markdown></div>
+                        </Fragment>
                     ))}
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-lg">
