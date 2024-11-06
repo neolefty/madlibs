@@ -20,7 +20,7 @@ export async function  POST(req: Request) {
                 execute: async ({ location }) => {
                     return {
                         location,
-                        weather: Math.round(Math.random() * (80 - 20) + 20),
+                        weather: Math.round(Math.random() * (90 - 10) + 10),
                     }
                 }
             }),
@@ -30,13 +30,9 @@ export async function  POST(req: Request) {
                     weather: z.number().describe("The weather in fahrenheit"),
                 }),
                 execute: async ({ weather }) => {
-                    if (weather < 40) {
-                        return "You should wear a coat"
-                    } else if (weather < 60) {
-                        return "You should wear a jacket"
-                    } else {
-                        return "You should wear a t-shirt"
-                    }
+                    if (weather < 20) return "Wear a heavy coat."
+                    if (weather < 50) return "Wear a light coat."
+                    return "Wear a t-shirt."
                 }
             }),
         }
