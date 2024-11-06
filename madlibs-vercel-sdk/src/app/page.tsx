@@ -1,12 +1,12 @@
 'use client'
 
 import { useChat } from "ai/react"
-import { Fragment } from "react"
-import Markdown from "react-markdown"
+import { AiDialogMessage } from "./aiDialogMessage"
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         maxSteps: 5,
+        initialInput: "Write a Mad Lib about ___. Enclose the blanks in square brackets, like [noun] or [Name of Person].",
     })
 
     return (
@@ -22,19 +22,7 @@ export default function Home() {
                     gridTemplateColumns: "min-content 1fr",
                 }}>
                     {messages.map(m => (
-                        <Fragment key={m.id}>
-                            <strong>{m.role === 'user' ? 'You: ' : 'AI: '}</strong>
-                            <div className="flex">
-                                {m.content && (
-                                    <div className="flex flex-col gap-2">
-                                        <Markdown>{m.content}</Markdown>
-                                    </div>
-                                )}
-                                {m.toolInvocations && (
-                                    <pre>{JSON.stringify(m.toolInvocations, null, 2)}</pre>
-                                )}
-                            </div>
-                        </Fragment>
+                        <AiDialogMessage message={m} key={m.id} />
                     ))}
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-lg">
@@ -42,8 +30,8 @@ export default function Home() {
                         type="text"
                         value={input}
                         onChange={handleInputChange}
-                        placeholder="Say something..."
-                        className="w-full p-4 text-lg border border-gray-300 rounded-lg"
+                        placeholder="What would you like your Mad Lib to be about?"
+                        className="w-full p-4 text-lg border border-gray-300 rounded-lg min-w-[30rem]"
                     />
                 </form>
             </main>
@@ -52,3 +40,4 @@ export default function Home() {
         </div>
     );
 }
+
