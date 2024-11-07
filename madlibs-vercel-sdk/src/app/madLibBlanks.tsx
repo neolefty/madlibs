@@ -18,7 +18,7 @@ export const MadLibBlanks = ({blanks, setBlankValue}: UseBlanks) => {
     )
 }
 
-const blanksRegex = /\[(.*?)\]/g
+const blanksRegex = /\[(.*?)]/g
 
 // The LLM formats blanks inside square brackets, e.g. [noun] or [Cat's Name].
 const getBlanks = (content: string): Blank[] => {

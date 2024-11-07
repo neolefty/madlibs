@@ -2,11 +2,22 @@
 
 import { useChat } from "ai/react"
 import { AiDialogMessage } from "./aiDialogMessage"
+import { useCallback } from "react"
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         maxSteps: 5,
-        initialInput: "Write a Mad Lib about ___. Enclose the blanks in square brackets, like [noun] or [Name of Person].",
+        initialMessages: [
+            {
+                id: "1",
+                role: "user",
+                content: "Let's write a Mad Lib! I'll give you a topic, and you make up a Mad Lib about it. "
+                    + "Regular blanks should be enclosed in square brackets, and should be lower case, for example: "
+                    + "[noun], [verb], or [neighborhood business]. Blanks that should repeat consistently across the story -- "
+                    + "such as a main character or a setting that is mentioned multiple times -- should also be in square brackets, "
+                    + "but capitalized, such as [Name of Person] or [City]."
+            }
+        ]
     })
 
     return (
