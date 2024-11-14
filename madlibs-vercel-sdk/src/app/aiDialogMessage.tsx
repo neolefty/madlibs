@@ -6,9 +6,9 @@ import { Fragment } from "react"
 import { fillInBlanks, MadLibBlanks, useBlanks } from "./madLibBlanks"
 
 export const AiDialogMessage = ({message}: { message: Message }) => {
-    const messageLc = message.content?.toLowerCase()
     const {blanks, setBlankValue} = useBlanks(message.content)
-    const isMadLib = blanks.length > 0  // messageLc?.includes('mad lib') || messageLc?.includes('madlib')
+    const isLlmResponse = message.role === 'assistant'
+    const isMadLib = isLlmResponse && blanks.length > 0  // messageLc?.includes('mad lib') || messageLc?.includes('madlib')
     return (
         <>
             <strong>{message.role === 'user' ? 'You: ' : 'AI: '}</strong>

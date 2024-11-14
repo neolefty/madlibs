@@ -2,7 +2,6 @@
 
 import { useChat } from "ai/react"
 import { AiDialogMessage } from "./aiDialogMessage"
-import { useCallback } from "react"
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -41,7 +40,7 @@ export default function Home() {
                         type="text"
                         value={input}
                         onChange={handleInputChange}
-                        placeholder="What would you like your Mad Lib to be about?"
+                        placeholder="What is your Mad Lib about?"
                         className="w-full p-4 text-lg border border-gray-300 rounded-lg min-w-[30rem]"
                     />
                 </form>
