@@ -18,7 +18,11 @@ export default function RootLayout({
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>{`${metadata.title}`}</title>
             <meta name="description" content={`${metadata.description}`}/>
-            <link rel="icon" href="/brackets.png" />
+            <link
+                rel="icon"
+                // based on https://thenounproject.com/browse/icons/term/square-brackets/
+                href="/brackets.png"
+            />
         </head>
         <body>
         {children}
