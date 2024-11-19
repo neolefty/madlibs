@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
 
 export const MadLibBlanks = ({blanks, setBlankValue}: UseBlanks) => {
     return (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col gap-2 content-start lg:flex-row lg:flex-wrap lg:content-normal">
             {blanks.map((blank, i) => (
                 <Fragment key={i}>
                     <input
@@ -10,7 +10,7 @@ export const MadLibBlanks = ({blanks, setBlankValue}: UseBlanks) => {
                         value={blank.value ?? ''}
                         onChange={e => setBlankValue(i, e.target.value)}
                         placeholder={blank.partOfSpeech}
-                        className="p-2 text-lg border border-gray-300 rounded-lg"
+                        className="p-2 text-lg border border-gray-300 rounded-lg max-w-[10rem] sm:max-w-[12rem] md:max-w-[16rem]"
                     />
                 </Fragment>
             ))}

@@ -21,9 +21,9 @@ export default function Home() {
 
     return (
         <div
-            className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-            <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-                <h1 className="text-4xl font-bold text-center sm:text-left">
+            className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-4 sm:p-20">
+            <main className="flex flex-col gap-8 row-start-2 items-center md:items-start">
+                <h1 className="text-4xl font-bold text-center md:text-left md:ml-20">
                     Tell your story
                 </h1>
                 <div style={{
@@ -31,22 +31,20 @@ export default function Home() {
                     gridGap: "1rem",
                     gridTemplateColumns: "min-content 1fr",
                 }}>
-                    {messages.map(m => (
-                        <AiDialogMessage message={m} key={m.id} />
+                    {messages.map((m, i) => (
+                        <AiDialogMessage message={m} isPrompt={i === 0}  key={m.id} />
                     ))}
                 </div>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-lg">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-lg md:self-left md:ml-20">
                     <input
                         type="text"
                         value={input}
                         onChange={handleInputChange}
-                        placeholder="What is your Mad Lib about?"
+                        placeholder="What is your story about?"
                         className="w-full p-4 text-lg border border-gray-300 rounded-lg min-w-[30rem]"
                     />
                 </form>
             </main>
-            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-            </footer>
         </div>
     );
 }
