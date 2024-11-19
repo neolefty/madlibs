@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mad Libs Playground",
+  title: "Fill in the blanks",
   description: "An exploration of LLMs as software components",
 };
 
@@ -13,9 +13,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+        <head>
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>{`${metadata.title}`}</title>
+            <meta name="description" content={`${metadata.description}`}/>
+            <link rel="icon" href="/brackets.png" />
+        </head>
+        <body>
         {children}
-      </body>
+        </body>
     </html>
   );
 }
