@@ -10,7 +10,7 @@ export const MadLibBlanks = ({blanks, setBlankValue}: UseBlanks) => {
                         value={blank.value ?? ''}
                         onChange={e => setBlankValue(i, e.target.value)}
                         placeholder={blank.partOfSpeech}
-                        className="p-2 text-lg border border-gray-300 rounded-lg max-w-[10rem] sm:max-w-[12rem] md:max-w-[16rem]"
+                        className="p-2 text-lg border border-gray-300 rounded-lg max-w-[10rem] md:max-w-[16rem]"
                     />
                 </Fragment>
             ))}
