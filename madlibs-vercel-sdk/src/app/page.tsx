@@ -44,6 +44,9 @@ export default function Home() {
                         className="w-full p-4 text-lg border border-gray-300 rounded-lg min-w-[30rem]"
                     />
                 </form>
+                <div className="text-md text-gray-500 text-center md:ml-20 md:text-left hover:underline">
+                    <a href="https://github.com/neolefty/madlibs">Code</a>
+                </div>
             </main>
         </div>
     );
