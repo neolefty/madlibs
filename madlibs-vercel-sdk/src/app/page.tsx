@@ -1,23 +1,37 @@
 'use client'
 
-import { useChat } from "ai/react"
+import { useState } from "react"
+import { useChat } from "@ai-sdk/react"
 import { AiDialogMessage } from "./aiDialogMessage"
 
 export default function Home() {
-    const { messages, input, handleInputChange, handleSubmit } = useChat({
-        maxSteps: 5,
-        initialMessages: [
+    const [input, setInput] = useState("")
+    const { messages, sendMessage, status } = useChat({
+        messages: [
             {
                 id: "1",
                 role: "user",
-                content: "Let's write a Mad Lib! I'll give you a topic, and you make up a Mad Lib about it. "
-                    + "Regular blanks should be enclosed in square brackets, and should be lower case, for example: "
-                    + "[noun], [verb], or [neighborhood business]. Blanks that should repeat consistently across the story -- "
-                    + "such as a main character or a setting that is mentioned multiple times -- should also be in square brackets, "
-                    + "but capitalized, such as [Name of Person] or [City]."
+                parts: [
+                    {
+                        type: "text",
+                        text: "Let's write a Mad Lib! I'll give you a topic, and you make up a Mad Lib about it. "
+                            + "Regular blanks should be enclosed in square brackets, and should be lower case, for example: "
+                            + "[noun], [verb], or [neighborhood business]. Blanks that should repeat consistently across the story -- "
+                            + "such as a main character or a setting that is mentioned multiple times -- should also be in square brackets, "
+                            + "but capitalized, such as [Name of Person] or [City]."
+                    }
+                ]
             }
         ]
     })
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!input.trim() || status === 'streaming') return
+        const text = input
+        setInput("")
+        await sendMessage({ text })
+    }
 
     return (
         <div
@@ -39,9 +53,10 @@ export default function Home() {
                     <input
                         type="text"
                         value={input}
-                        onChange={handleInputChange}
+                        onChange={(e) => setInput(e.target.value)}
                         placeholder="What is your story about?"
                         className="w-full p-4 text-lg border border-gray-300 rounded-lg min-w-[30rem]"
+                        disabled={status === 'streaming'}
                     />
                 </form>
                 <div className="text-md text-gray-500 text-center md:ml-20 md:text-left hover:underline">

@@ -1,4 +1,4 @@
-import { streamText, tool } from "ai"
+import { streamText, tool, stepCountIs, convertToModelMessages } from "ai"
 import { openai } from "@ai-sdk/openai"
 import { z } from "zod"
 
@@ -9,12 +9,13 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     const result = await streamText({
-        model: openai('gpt-4-turbo'),
-        messages,
+        model: openai('gpt-4o'),
+        messages: convertToModelMessages(messages),
+        stopWhen: stepCountIs(5),
         tools: {
             weather: tool({
                 description: "Get the weather in a location (fahrenheit)",
-                parameters: z.object({
+                inputSchema: z.object({
                     location: z.string().describe("The location to get the weather for"),
                 }),
                 execute: async ({ location }) => {
@@ -26,7 +27,7 @@ export async function POST(req: Request) {
             }),
             clothing: tool({
                 description: "Get clothing recommendations based on the weather",
-                parameters: z.object({
+                inputSchema: z.object({
                     weather: z.number().describe("The weather in fahrenheit"),
                 }),
                 execute: async ({ weather }) => {
@@ -38,5 +39,5 @@ export async function POST(req: Request) {
         }
     })
 
-    return result.toDataStreamResponse()
+    return result.toUIMessageStreamResponse()
 }
